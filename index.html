@@ -1,22 +1,50 @@
 <!doctype html>
-<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f6e9d4"><title>もるっと暮らし</title>
+<html lang="ja"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#f2e5cb"><title>もるっと暮らし</title>
 <style>
-*{box-sizing:border-box}body{margin:0;background:#e8d8c3;color:#604c3b;font-family:system-ui,-apple-system,sans-serif}main{max-width:440px;min-height:100dvh;margin:auto;background:#fff7e9;padding:16px 16px 28px}header{display:flex;justify-content:space-between;align-items:center}h1{font-size:22px;margin:4px 0 12px}.pill{background:#f2dfc4;border-radius:20px;padding:8px 12px;font-size:13px}.room{position:relative;border:6px solid #d6b28b;border-radius:16px;overflow:hidden;background:#e9d1ad}canvas{width:100%;height:auto;display:block;image-rendering:pixelated;touch-action:manipulation}.speech{position:absolute;left:12px;top:12px;background:#fff9ed;border-radius:14px;padding:7px 12px;font-size:13px;box-shadow:0 2px 0 #d6b28b}.stats{margin:20px 0 14px;display:grid;gap:10px}.stat{display:grid;grid-template-columns:90px 1fr 40px;align-items:center;gap:8px;font-size:14px}.bar{height:13px;background:#e8dfd1;border-radius:20px;overflow:hidden}.fill{height:100%;background:#9dbd80;transition:width .3s}.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}button{border:0;border-radius:14px;background:#f0d9b6;color:#604c3b;font-size:15px;font-weight:700;padding:16px 4px;cursor:pointer;box-shadow:0 4px 0 #cda77d}button:active{transform:translateY(3px);box-shadow:0 1px 0 #cda77d}.note{font-size:12px;line-height:1.6;color:#8d7967;margin-top:20px;text-align:center}
-</style></head><body><main><header><h1>🐹 もるっと暮らし</h1><span class="pill" id="day">DAY 1</span></header><div class="room"><canvas id="game" width="320" height="280" aria-label="お部屋で暮らすモルモット"></canvas><div class="speech" id="speech" aria-live="polite">ぷいぷい♪</div></div><section class="stats"><div class="stat"><span>🥬 おなか</span><div class="bar"><div class="fill" id="hungerBar"></div></div><span id="hungerText"></span></div><div class="stat"><span>💕 ごきげん</span><div class="bar"><div class="fill" id="moodBar"></div></div><span id="moodText"></span></div><div class="stat"><span>✨ きれい</span><div class="bar"><div class="fill" id="cleanBar"></div></div><span id="cleanText"></span></div></section><div class="actions"><button id="feed">🥬<br>ごはん</button><button id="pet">🖐️<br>なでる</button><button id="clean">🧹<br>おそうじ</button></div><p class="note">のんびりお世話してね。データはこのブラウザに自動保存されるよ。<br>モルモットはお留守番しても元気だよ。</p></main>
+*{box-sizing:border-box}body{margin:0;background:#d7c5a8;color:#3e3029;font-family:system-ui,-apple-system,sans-serif}main{max-width:480px;min-height:100dvh;margin:auto;background:#f6ecd9;padding:12px 12px 28px}h1{font-size:23px;margin:3px 0 12px;color:#6a3f2b;text-shadow:2px 2px #e5b88a}.shell{border:4px solid #3e5063;box-shadow:inset 0 0 0 3px #9db0b3,0 4px #9c8069;background:#e5d7ba}.top{display:flex;gap:8px;justify-content:space-between;padding:9px}.status{background:#fff7e7;border:3px solid #40576a;box-shadow:3px 3px #a8b6b3;padding:8px;width:62%;font-size:12px}.status strong{font-size:15px}.stat{display:flex;align-items:center;gap:5px;margin-top:6px}.stat label{width:50px;flex:none;font-weight:700}.track{flex:1;height:11px;background:#deded3;border:2px solid #65727a}.fill{height:100%;background:#91bc74}.date{align-self:flex-start;background:#fff7e7;border:3px solid #40576a;padding:9px 5px;font-size:12px;font-weight:700;white-space:nowrap}.room{position:relative;background:#d7c5a8}canvas{display:block;width:100%;height:auto;image-rendering:pixelated;touch-action:manipulation}.bubble{position:absolute;left:12px;bottom:12px;background:#fff8e6;border:2px solid #70543b;padding:5px 10px;font-size:13px;max-width:85%}.buttons{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;padding:11px 8px;background:#50677b}.buttons button{border:3px solid #263e52;box-shadow:inset 0 0 0 2px #fff8e6,0 3px #283e4d;background:#fff4df;border-radius:6px;min-height:63px;font-size:13px;font-weight:800;color:#34475a;cursor:pointer}.buttons button span{display:block;font-size:22px;margin-bottom:3px}.buttons button:active{transform:translateY(2px)}.help{text-align:center;font-size:12px;color:#75634f;line-height:1.7;margin:18px 4px}
+</style></head><body><main><h1>🐹 もるっと暮らし <small style="font-size:11px">ver.0.2</small></h1><div class="shell"><div class="top"><div class="status"><strong>🐹 もるちゃん</strong><div class="stat"><label>おなか</label><div class="track"><div id="hunger" class="fill"></div></div></div><div class="stat"><label>きげん</label><div class="track"><div id="mood" class="fill" style="background:#e79d9c"></div></div></div><div class="stat"><label>きれい</label><div class="track"><div id="clean" class="fill" style="background:#89b7cb"></div></div></div></div><div class="date" id="date">DAY 1 ☀️</div></div><div class="room"><canvas id="game" width="256" height="224" aria-label="レトロなドット絵のお部屋とモルモット"></canvas><div class="bubble" id="bubble" aria-live="polite">ぷいぷい♪</div></div><div class="buttons"><button id="feed"><span>🥬</span>ごはん</button><button id="pet"><span>🖐️</span>なでる</button><button id="tidy"><span>🧹</span>そうじ</button></div></div><p class="help">モルモットをタップしてもなでられるよ。<br>お世話の記録はこのブラウザに自動保存されるよ。</p></main>
 <script>
 (()=>{
-const key='morutto-save-v1',now=Date.now();let saved={};try{saved=JSON.parse(localStorage.getItem(key)||'{}')}catch{}
-const clamp=n=>Math.max(0,Math.min(100,n));const state={hunger:80,mood:80,clean:90,born:now,last:now,...saved};const elapsed=Math.max(0,Math.min((now-state.last)/3600000,720));state.hunger=clamp(state.hunger-elapsed*1.5);state.mood=clamp(state.mood-elapsed*.6);state.clean=clamp(state.clean-elapsed*.8);state.last=now;
-const canvas=document.getElementById('game'),ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=false;let x=160,target=160,action='idle',until=0,frame=0;const $=id=>document.getElementById(id);
-function save(){state.last=Date.now();try{localStorage.setItem(key,JSON.stringify(state))}catch{}}
-function ui(){for(const [name,val] of [['hunger',state.hunger],['mood',state.mood],['clean',state.clean]]){$(name+'Bar').style.width=val+'%';$(name+'Text').textContent=Math.round(val)+'%'}$('day').textContent='DAY '+(Math.floor((Date.now()-state.born)/86400000)+1)}
-function say(s){$('speech').textContent=s}
-function doAction(kind){action=kind;until=performance.now()+1600;if(kind==='feed'){state.hunger=clamp(state.hunger+22);say('もぐもぐ♪')}if(kind==='pet'){state.mood=clamp(state.mood+18);say('ぷいぷいっ♡')}if(kind==='clean'){state.clean=clamp(state.clean+30);say('ぴかぴか！')}ui();save()}
-$('feed').onclick=()=>doAction('feed');$('pet').onclick=()=>doAction('pet');$('clean').onclick=()=>doAction('clean');canvas.addEventListener('pointerdown',()=>doAction('pet'));
-function rect(px,py,w,h,c){ctx.fillStyle=c;ctx.fillRect(Math.round(px),Math.round(py),w,h)}
-function draw(t){frame++;rect(0,0,320,280,'#ead6b7');rect(0,174,320,106,'#caa37a');for(let i=0;i<8;i++)rect(0,180+i*15,320,1,'#b78d68');rect(28,42,78,110,'#a47c5a');rect(35,49,64,96,'#dfc49e');rect(41,55,52,42,'#a6b69a');rect(41,103,52,36,'#f4e6c8');rect(236,102,66,67,'#ad815c');rect(245,115,48,54,'#765540');rect(255,133,28,36,'#3d3029');rect(14,207,66,28,'#ad7952');rect(19,207,56,10,'#8cb476');rect(22,200,5,16,'#6d985f');rect(33,195,5,21,'#80a96c');rect(45,201,5,17,'#69925b');if(frame%140===0&&action==='idle')target=85+Math.random()*140;if(action==='idle')x+=(target-x)*.012;if(t>until){action='idle';if(frame%240===0)say('ぷいぷい♪')}
-const bounce=action==='pet'?Math.sin(t/85)*3:Math.abs(target-x)>5?Math.sin(t/110)*2:Math.sin(t/550)*1.5;const gx=Math.round(x),gy=Math.round(195+bounce);
-rect(gx-48,gy+37,100,9,'#b58b6b');rect(gx-44,gy-20,88,62,'#f5e4c8');rect(gx-34,gy-38,23,28,'#ae7b52');rect(gx+12,gy-38,23,28,'#ae7b52');rect(gx-28,gy-32,12,15,'#d9a4a0');rect(gx+17,gy-32,12,15,'#d9a4a0');rect(gx-24,gy-27,48,54,'#b98352');rect(gx-35,gy+27,16,13,'#f5e4c8');rect(gx+19,gy+27,16,13,'#f5e4c8');rect(gx-22,gy-2,7,9,'#2f2928');rect(gx+15,gy-2,7,9,'#2f2928');rect(gx-3,gy+10,7,5,'#d99894');if(action==='feed'){rect(gx-4,gy+24,14,7,'#82b569');rect(gx+4,gy+18,4,9,'#5d9251')}if(action==='pet'){rect(gx-32,gy-60,10,10,'#db8b85');rect(gx+25,gy-68,8,8,'#db8b85')}if(action==='clean'){rect(195,218,8,8,'#fff7d7');rect(210,204,6,6,'#fff7d7')}requestAnimationFrame(draw)}
-ui();save();setInterval(()=>{state.hunger=clamp(state.hunger-.025);state.mood=clamp(state.mood-.01);state.clean=clamp(state.clean-.014);ui();save()},60000);requestAnimationFrame(draw);
+'use strict';
+const key='morutto-save-v1',now=Date.now();let old={};try{old=JSON.parse(localStorage.getItem(key)||'{}')}catch(e){}
+const limit=n=>Math.max(0,Math.min(100,n));const s={hunger:80,mood:80,clean:90,born:now,last:now,...old};const hours=Math.max(0,Math.min(720,(now-s.last)/3600000));s.hunger=limit(s.hunger-hours*1.5);s.mood=limit(s.mood-hours*.6);s.clean=limit(s.clean-hours*.8);
+const c=document.getElementById('game'),g=c.getContext('2d');g.imageSmoothingEnabled=false;const $=id=>document.getElementById(id);let x=119,goal=119,dir=1,action='idle',actionEnd=0,tick=0;
+const p=(x,y,w,h,color)=>{g.fillStyle=color;g.fillRect(Math.round(x),Math.round(y),w,h)};
+function save(){s.last=Date.now();try{localStorage.setItem(key,JSON.stringify(s))}catch(e){}}
+function update(){for(const k of ['hunger','mood','clean'])$(k).style.width=limit(s[k])+'%';$('date').textContent='DAY '+(Math.floor((Date.now()-s.born)/86400000)+1)+' ☀️'}
+function doAction(a){action=a;actionEnd=performance.now()+1800;if(a==='feed'){s.hunger=limit(s.hunger+22);$('bubble').textContent='もぐもぐ♪'}if(a==='pet'){s.mood=limit(s.mood+18);$('bubble').textContent='ぷいぷい♡'}if(a==='tidy'){s.clean=limit(s.clean+30);$('bubble').textContent='ぴかぴか！'}update();save()}
+$('feed').onclick=()=>doAction('feed');$('pet').onclick=()=>doAction('pet');$('tidy').onclick=()=>doAction('tidy');c.addEventListener('pointerdown',()=>doAction('pet'));
+function room(){p(0,0,256,142,'#d9d1b7');p(0,0,256,5,'#b4a991');p(0,118,256,24,'#aa815d');for(let i=0;i<256;i+=16)p(i,121,2,19,'#8d6c52');p(0,140,256,84,'#d4a36c');for(let y=148;y<224;y+=17)p(0,y,256,2,'#b78457');for(let i=0;i<9;i++)p(i*32+(i%2)*13,151,2,70,'#c18f60');
+ // window
+ p(87,21,79,69,'#8e6649');p(92,26,69,59,'#8ac2d4');p(96,31,61,31,'#a6d5e3');p(96,64,61,17,'#83ac76');p(100,68,17,13,'#6f9b64');p(120,61,18,20,'#76a268');p(143,65,13,16,'#6c965f');p(123,26,5,59,'#8e6649');p(92,52,69,5,'#8e6649');p(84,89,85,5,'#9c7958');
+ // wall art
+ p(187,48,32,40,'#956d4e');p(191,52,24,32,'#f4e5c5');p(201,58,5,18,'#73a46c');p(196,64,15,7,'#85b575');
+ // house
+ p(18,123,62,43,'#916a49');p(24,116,50,7,'#b58a59');p(23,127,52,34,'#c49660');for(let i=0;i<4;i++)p(28,132+i*7,40,1,'#b18254');p(46,141,23,25,'#694932');p(51,136,14,7,'#694932');
+ // water bottle
+ p(230,98,17,38,'#3e5d77');p(233,100,11,27,'#a8d4e7');p(235,109,7,15,'#d9edf0');p(236,136,5,16,'#58788c');
+ // hay
+ for(let i=0;i<28;i++){const a=i*2.4;p(8+(i*13)%56,185+(i*7)%16,13,3,i%3===0?'#8d9b57':i%3===1?'#a7b46a':'#bdba70')}
+ // bowl
+ p(190,175,40,15,'#5a6870');p(194,175,32,9,'#d3d8cd');p(198,176,24,5,'#a88b57');for(let i=0;i<8;i++)p(199+i*3,176+i%2*2,2,2,'#6c6e43');
+ // bed
+ p(194,197,54,20,'#b97580');p(198,194,46,18,'#e8a4ac');p(206,198,30,8,'#d48b98');
+}
+function pig(t){const bob=action==='pet'?Math.sin(t/90)*2:action==='idle'&&Math.abs(goal-x)>3?Math.sin(t/100)*1:0;const X=Math.round(x),Y=Math.round(171+bob);
+p(X-35,Y+22,73,6,'#b88d64');
+ // chunky, horizontal guinea pig body with short feet
+ p(X-37,Y-16,74,39,'#47362e');p(X-32,Y-23,61,9,'#47362e');p(X-32,Y-17,65,35,'#b87945');p(X-27,Y-21,52,9,'#bb8250');p(X-34,Y-8,11,19,'#b87945');p(X+18,Y-17,18,32,'#fff1d9');p(X+2,Y-20,17,35,'#fff1d9');p(X-4,Y-18,10,30,'#fff1d9');p(X-18,Y+13,48,7,'#f2dec1');
+ // feet
+ p(X-25,Y+18,13,7,'#c98d82');p(X+20,Y+18,12,7,'#c98d82');
+ // ears and cheeks
+ p(X+8,Y-27,16,17,'#503a31');p(X+10,Y-24,12,12,'#a56b52');p(X+13,Y-22,7,7,'#c78b80');p(X+22,Y-13,17,25,'#f9ead3');p(X+26,Y-5,10,12,'#f9ead3');
+ // eye, nose
+ p(X+26,Y-13,5,6,'#29272a');p(X+27,Y-12,2,2,'#fff6e6');p(X+37,Y+2,4,3,'#d58b8a');p(X+34,Y+7,3,2,'#705248');
+ // fur highlights
+ p(X-27,Y-17,12,3,'#d39a62');p(X-19,Y-19,8,3,'#d39a62');p(X-30,Y+3,5,8,'#a36a40');
+ if(action==='feed'){p(X+37,Y+9,13,5,'#5f9653');p(X+44,Y+2,4,11,'#80ae60')}if(action==='pet'){p(X+9,Y-40,7,7,'#e78c91');p(X+23,Y-48,6,6,'#e78c91')}if(action==='tidy'){p(X+42,Y-23,5,5,'#fff4c5')}
+}
+function draw(t){tick++;room();if(t>actionEnd){action='idle';if(tick%250===0)$('bubble').textContent='ぷいぷい♪'}if(action==='idle'){if(tick%190===0)goal=87+Math.random()*65;x+=(goal-x)*.017}pig(t);requestAnimationFrame(draw)}
+update();save();setInterval(()=>{s.hunger=limit(s.hunger-.025);s.mood=limit(s.mood-.01);s.clean=limit(s.clean-.014);update();save()},60000);requestAnimationFrame(draw);
 })();
 </script></body></html>
